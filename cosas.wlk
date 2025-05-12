@@ -46,6 +46,27 @@ object bateriaAntiaerea{
 object contenedorPortuario{
     const tara = 100
     const cosasDentro = []
-    method peso() = tara + cosasDentro.sum(c=>c.pesaje())
-  
+    method peso() = tara + cosasDentro.sum({c=>c.peso()})
+    method nivelPeligrosidad() = 
+        if (cosasDentro.size() == 0) 0 else cosasDentro.max({c=>c.nivelPeligrosidad()})     
+}
+
+object residuosRadioactivos {
+    var peso = 0
+    method nivelPeligrosidad() = 200
+    method peso() = peso
+    method actualizarPeso(nuevoPeso) {
+        peso = nuevoPeso
+    }
+}
+
+object embalajeDeSeguridad {
+    var cosaAEnvolver = null   // esta mal inicializarlo en null??
+    method envolver(cosa) {
+        cosaAEnvolver = cosa      
+    }
+    method peso() = cosaAEnvolver.peso()
+
+    method nivelPeligrosidad() = cosaAEnvolver.nivelPeligrosidad() / 2
+    
 }

@@ -18,6 +18,7 @@ object camion {
     }
     method nivelPeligrosidadPrimerCosa(nivel) {
         cosasCargadas.find({a=>a.nivelPeligrosidad() == nivel})    
+  ////// que pasa si no encuentra nada? tengo que hacer un if que salve la funcion=? 
     }
     method cosasConPeligrosidad(nivelPeligrosidad) {
         cosasCargadas.filter({a=>a.nivelPeligrosidad() > nivelPeligrosidad})
@@ -28,4 +29,11 @@ object camion {
     method estaExcedidoPeso() = self.pesoTotal() >= 2500
     method puedeCircularEnRuta(nivelPeligrosidad) = not self.estaExcedidoPeso() and cosasCargadas.all({c=>c.nivelPeligrosidad()< nivelPeligrosidad})
 
+    method hayAlgoDePesoEntre(valorMin, valorMax) {
+        cosasCargadas.any({c=>c.peso() >= valorMin and c.peso() <= valorMax})
+    }
+    method cosaMasPesada() {
+      cosasCargadas.max({c=>c.peso()})
+  ////// que pasa si no encuentra nada? tengo que hacer un if que salve la funcion=? 
+    }
 }
