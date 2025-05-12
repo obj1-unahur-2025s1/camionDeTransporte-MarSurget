@@ -1,3 +1,4 @@
+import cosas.*
 import camion.*
 
 describe "group of test for camion" {
