@@ -13,12 +13,15 @@ object camion {
     method sonNumPares(cosas) {
         cosasCargadas.all({c=>c.peso() % 2 == 0})
     }
-    method pesoDe(algo, peso) {
-        cosasCargadas.any({a=>a.peso() == peso })      
+    method algoConPesoDe(peso) {
+        return cosasCargadas.any({a=>a.peso() == peso })      
     }
     method nivelPeligrosidadPrimerCosa(nivel) {
-        cosasCargadas.find({a=>a.nivelPeligrosidad() == nivel})    
-  ////// que pasa si no encuentra nada? tengo que hacer un if que salve la funcion=? 
+        if (cosasCargadas.any({c=>c.nivelPeligrosidad() == nivel})){
+            cosasCargadas.find({a=>a.nivelPeligrosidad() == nivel})
+        } else{
+            return null 
+        }
     }
     method cosasConPeligrosidad(nivelPeligrosidad) {
         cosasCargadas.filter({a=>a.nivelPeligrosidad() > nivelPeligrosidad})

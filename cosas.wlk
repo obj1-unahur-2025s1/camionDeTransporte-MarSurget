@@ -28,7 +28,7 @@ object paqueteDeLadrillos{
 object arenaAGranel{
     var peso = null
     method peso() = peso 
-    method modificarPeso(nuevoPeso) {
+    method actualizarPeso(nuevoPeso) {
          peso = nuevoPeso
     }
 }
@@ -49,6 +49,9 @@ object contenedorPortuario{
     method peso() = tara + cosasDentro.sum({c=>c.peso()})
     method nivelPeligrosidad() = 
         if (cosasDentro.size() == 0) 0 else cosasDentro.max({c=>c.nivelPeligrosidad()})     
+    method agregarCosa(algo) {
+        cosasDentro.add(algo)      
+    }
 }
 
 object residuosRadioactivos {

@@ -1,10 +1,33 @@
 import cosas.*
 import camion.*
 
-describe "group of test for camion" {
-
-  test "first test" {
-    assert.that(true)
+describe "Test for camion" {
+  
+  test "Peso total del camion con; Cargar el camion con bumblebee como robot, la arena a granel con 150 kilos, la batería antiaérea con los misiles puestos, y el embalaje de seguridad poniéndole como contenido el paquete de ladrillos con 80 ladrillos. " {
+    bumblebee.transformarse()
+    arenaAGranel.actualizarPeso(150)
+    bateriaAntiaerea.cargarMisiles()
+    paqueteDeLadrillos.sumarLadrillos(80)
+    embalajeDeSeguridad.envolver(paqueteDeLadrillos)
+    camion.cargar(bumblebee)
+    camion.cargar(arenaAGranel)
+    camion.cargar(bateriaAntiaerea)
+    camion.cargar(embalajeDeSeguridad)
+    assert.equals(2410, camion.pesoTotal())
   }
+
+    test "peso de algo con peso 150; Cargar el camion con bumblebee como robot, la arena a granel con 150 kilos, la batería antiaérea con los misiles puestos, y el embalaje de seguridad poniéndole como contenido el paquete de ladrillos con 80 ladrillos. " {
+    bumblebee.transformarse()
+    arenaAGranel.actualizarPeso(150)
+    bateriaAntiaerea.cargarMisiles()
+    paqueteDeLadrillos.sumarLadrillos(80)
+    embalajeDeSeguridad.envolver(paqueteDeLadrillos)
+    camion.cargar(bumblebee)
+    camion.cargar(arenaAGranel)
+    camion.cargar(bateriaAntiaerea)
+    camion.cargar(embalajeDeSeguridad)
+    assert.that(camion.algoConPesoDe(100))
+  }
+
 
 }
