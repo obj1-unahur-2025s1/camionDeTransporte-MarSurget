@@ -1,4 +1,6 @@
 import cosas.*
+import camion.*
+
 
 describe "Test for cosas" {
 
@@ -30,5 +32,42 @@ describe "Test for cosas" {
     assert.equals(100, embalajeDeSeguridad.nivelPeligrosidad())
   }
 
+  test "al cargar a bumblebee no queda transformado" {
+    bumblebee.transformarse()
+    assert.that(bumblebee.estaTransformado())
+    bumblebee.alCargarse()
+    assert.notThat(bumblebee.estaTransformado())
+  }
 
+  test "Paquetes de ladrillos aumentan a 12 al cargarse" {
+    paqueteDeLadrillos.sumarLadrillos(5)
+    assert.equals(5, paqueteDeLadrillos.cantidadDeLadrillos())
+    paqueteDeLadrillos.alCargarse()
+    assert.equals(17, paqueteDeLadrillos.cantidadDeLadrillos())
+  }
+  test "arenaAGranel pierde peso al cargarse" {
+    arenaAGranel.actualizarPeso(50)
+    assert.equals(50, arenaAGranel.peso())
+    arenaAGranel.alCargarse()
+    assert.equals(40, arenaAGranel.peso())
+  }
+  test "bateriaAntiaerea carga misiles al cargarse" {
+    bateriaAntiaerea.hayMisiles()
+    assert.notThat(bateriaAntiaerea.hayMisiles())
+    bateriaAntiaerea.alCargarse()
+    assert.that(bateriaAntiaerea.hayMisiles())
+  }
+  test "Carga el contenedor con bumblebee y bateriaAntiaerea" {
+    contenedorPortuario.agregarCosa(bateriaAntiaerea)
+    contenedorPortuario.agregarCosa(bumblebee)
+    contenedorPortuario.alCargarse()
+    assert.notThat(bumblebee.estaTransformado())
+    assert.that(bateriaAntiaerea.hayMisiles())
+  }
+  test "residuosRadioactivos amenta peso al cargarse" {
+    residuosRadioactivos.actualizarPeso(50)
+    assert.equals(50, residuosRadioactivos.peso())
+    residuosRadioactivos.alCargarse()
+    assert.equals(65, residuosRadioactivos.peso())
+  }
 }

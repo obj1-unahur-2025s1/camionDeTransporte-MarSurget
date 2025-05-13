@@ -2,32 +2,44 @@ import cosas.*
 import camion.*
 
 describe "Test for camion" {
-  
-  test "Peso total del camion con; Cargar el camion con bumblebee como robot, la arena a granel con 150 kilos, la batería antiaérea con los misiles puestos, y el embalaje de seguridad poniéndole como contenido el paquete de ladrillos con 80 ladrillos. " {
-    bumblebee.transformarse()
-    arenaAGranel.actualizarPeso(150)
-    bateriaAntiaerea.cargarMisiles()
-    paqueteDeLadrillos.sumarLadrillos(80)
-    embalajeDeSeguridad.envolver(paqueteDeLadrillos)
-    camion.cargar(bumblebee)
-    camion.cargar(arenaAGranel)
-    camion.cargar(bateriaAntiaerea)
-    camion.cargar(embalajeDeSeguridad)
+  method initialize() {
+      bumblebee.transformarse()
+      arenaAGranel.actualizarPeso(150)
+      bateriaAntiaerea.cargarMisiles()
+      paqueteDeLadrillos.sumarLadrillos(80)
+      embalajeDeSeguridad.envolver(paqueteDeLadrillos)
+      camion.cargar(bumblebee)
+      camion.cargar(arenaAGranel)
+      camion.cargar(bateriaAntiaerea)
+      camion.cargar(embalajeDeSeguridad)
+  }
+  test "Peso total del camion con det cargamento" {
     assert.equals(2410, camion.pesoTotal())
   }
-
-    test "peso de algo con peso 150; Cargar el camion con bumblebee como robot, la arena a granel con 150 kilos, la batería antiaérea con los misiles puestos, y el embalaje de seguridad poniéndole como contenido el paquete de ladrillos con 80 ladrillos. " {
-    bumblebee.transformarse()
-    arenaAGranel.actualizarPeso(150)
-    bateriaAntiaerea.cargarMisiles()
-    paqueteDeLadrillos.sumarLadrillos(80)
-    embalajeDeSeguridad.envolver(paqueteDeLadrillos)
-    camion.cargar(bumblebee)
-    camion.cargar(arenaAGranel)
-    camion.cargar(bateriaAntiaerea)
-    camion.cargar(embalajeDeSeguridad)
-    assert.that(camion.algoConPesoDe(100))
+  test "hay algo con peso 150." {
+    assert.that(camion.algoConPesoDe(150))
+  }
+  test " Hay algo con nivel de peligrosidad 30" {
+    assert.equals(bumblebee,camion.nivelPeligrosidadPrimerCosa2(30))
+  }
+  test "Cosas con peligrosidad > 1" {
+    assert.equals(2,camion.cosasQueSuperanPeligrosidad(2).size()) ///// ver este
+  }
+  test "Cosas con peligrosidad > a ladrillos" {
+    assert.equals(2,camion.cosasConPeligrosidadMayorA(paqueteDeLadrillos).size()) ///// ver este
   }
 
+  test "no esta excedido de peso el camion con 2410 peso total" {
+    assert.notThat(camion.estaExcedidoPeso())
+  }
+  test "Puede circular en ruta por su peso y carga de nivel de peligrosidad" {
+    assert.that(camion.puedeCircularEnRuta(10000))
+  }
+  test "Hay algo de peso entre 20 y 100" {
+    assert.that(camion.hayAlgoDePesoEntre(100, 200))
+  }
+  test "La cosa mas pesada es bumblebee" {
+    assert.equals(bumblebee, camion.cosaMasPesada())
+  }
 
 }

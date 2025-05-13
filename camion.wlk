@@ -1,42 +1,58 @@
 import cosas.*
 
 object camion {
-    const tara = 1000
-    const cosasCargadas = []
-    method pesoTotal() = tara + cosasCargadas.sum({c=>c.peso()})
+    const property cosasCargadas = []
+
+    method pesoTotal() = 1000 + cosasCargadas.sum({c=>c.peso()})
+
     method cargar(algo){
         cosasCargadas.add(algo)
     }
+
     method descargar(algo) {
-        cosasCargadas.remove(algo)
+        cosasCargadas.remove(algo) /// no se rompe si no hay nada en la colec
     }
+
     method sonNumPares(cosas) {
-        cosasCargadas.all({c=>c.peso() % 2 == 0})
+        cosasCargadas.all({c=>c.peso().even()}) /// no se rompe
     }
+
     method algoConPesoDe(peso) {
-        return cosasCargadas.any({a=>a.peso() == peso })      
+        return cosasCargadas.any({a=>a.peso() == peso }) /// no se rompe
     }
+
     method nivelPeligrosidadPrimerCosa(nivel) {
         if (cosasCargadas.any({c=>c.nivelPeligrosidad() == nivel})){
-            cosasCargadas.find({a=>a.nivelPeligrosidad() == nivel})
-        } else{
-            return null 
-        }
+            cosasCargadas.find({c=>c.nivelPeligrosidad() == nivel})
+        } 
     }
-    method cosasConPeligrosidad(nivelPeligrosidad) {
-        cosasCargadas.filter({a=>a.nivelPeligrosidad() > nivelPeligrosidad})
+
+    method nivelPeligrosidadPrimerCosa2(nivel) =cosasCargadas.findOrDefault({c=>c.nivelPeligrosidad() == nivel}, null)
+
+
+    method cosasQueSuperanPeligrosidad(nivelPeligrosidad) {
+        return cosasCargadas.filter({a=>a.nivelPeligrosidad() > nivelPeligrosidad}) /// no se rompe q dev vacio
     }
+
     method cosasConPeligrosidadMayorA(algo) {
-        cosasCargadas.filter({a=>a.nivelPeligrosidad() > algo.nivelPeligrosidad()})
+        return cosasCargadas.filter({a=>a.nivelPeligrosidad() > algo.nivelPeligrosidad()}) /// no se rompe q dev vacio
     }
-    method estaExcedidoPeso() = self.pesoTotal() >= 2500
-    method puedeCircularEnRuta(nivelPeligrosidad) = not self.estaExcedidoPeso() and cosasCargadas.all({c=>c.nivelPeligrosidad()< nivelPeligrosidad})
+
+    method estaExcedidoPeso() = self.pesoTotal() >= 2500 
+
+    method puedeCircularEnRuta(nivelPeligrosidad) {
+        return !self.estaExcedidoPeso() and cosasCargadas.all({c=>c.nivelPeligrosidad() < nivelPeligrosidad})
+    } 
 
     method hayAlgoDePesoEntre(valorMin, valorMax) {
-        cosasCargadas.any({c=>c.peso() >= valorMin and c.peso() <= valorMax})
+        return cosasCargadas.any({c=>c.peso().between(valorMin, valorMax)})
     }
+
     method cosaMasPesada() {
-      cosasCargadas.max({c=>c.peso()})
-  ////// que pasa si no encuentra nada? tengo que hacer un if que salve la funcion=? 
+        if (!cosasCargadas.isEmpty()){
+           return cosasCargadas.max({c=>c.peso()})
+        } else{
+            return 
+        }
     }
 }
